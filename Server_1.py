@@ -2,8 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 from urllib.parse import unquote, urlparse
 import sys
-#to make sure that the systems path includes numpy
-print(sys.path)
+import csv
 
 #global var (I'd rather have this accessed from the class below, but dont know how to make that happen)
 global_cord = "x=4"
@@ -41,6 +40,22 @@ for line in file.readlines():
     board.append( y )
 file.close()
 print(board)
+
+class UpdateBoard:
+
+    def __init__ (self):
+        self.x = 'working'
+
+    def write_board(self):
+
+        with open("onw_board.txt", "w") as output:
+            output.write(str(board))
+
+        # with open('own_board.txt', 'w') as f:
+        #     writer = csv.writer(f, delimiter='')
+        #     #(f, delimiter=',')
+        #     writer.writerows(board)  #considering my_list is a list of lists.
+
 
 
 class Battleship:
@@ -194,6 +209,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             print(mylist)
             battleship = Battleship(mylist)
             hit, type, sunk, been_hit = battleship.hit()
+            newBoard = UpdateBoard()
+            newBoard.write_board()
             #url = unquote(o.params)
             #print(url)
 
@@ -224,17 +241,17 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 response = BytesIO()
                 response.write(b'This is POST request. ')
-                response.write(b'Coordinants were out of Bounds')
+                response.write(b'This has been hit already')
                 self.wfile.write(response.getvalue())
 
             else:
                 self.send_response(200)
                 self.end_headers()
                 response = BytesIO()
-                response.write(b'hit=%d' % hit)
-                response.write(b'type=%s' % bytes(type,'utf-8'))
-                response.write(b'sunk=%d' % sunk)
-                response.write(b'been_hit=%d' % been_hit)
+                response.write(b'hit=%d ' % hit)
+                response.write(b'type=%s ' % bytes(type,'utf-8'))
+                response.write(b'sunk=%d ' % sunk)
+                response.write(b'been_hit=%d ' % been_hit)
                 self.wfile.write(response.getvalue())
 
 
