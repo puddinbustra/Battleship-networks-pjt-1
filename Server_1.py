@@ -1,6 +1,11 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 from urllib.parse import unquote, urlparse
+import numpy as np
+
+
+#class update_board()  (we need to get this into a class so that it can be called
+#                       multiple times)
 
 #formats own_board.txt into a html doc that can be passed in do_GET
 contents = open("own_board.txt","r")
@@ -17,10 +22,22 @@ with open("opponent_board.html", "w") as e:
         e.write( lines + "<br />" )
 
 
+#initialize array of own_board (this needs to be a class so that we can
+#read in a board, update this one with it, and then easily access cordinates
+#to see if there was a hit or not)
+#if there is a hit, our own_board.txt needs to be updated to show that it was hit
+array_own_board = [[_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
+                    [_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
+                    ,[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
+                    ,[_,_,_,_,_,_,_,_,_,_]]
 
-#class battleship(cordinates)
-#   def hit(cordinates):
-#   method for determining if it was a hit, or if it was an exeption
+
+
+class battleship(cordinates)
+    #method for determining if it was a hit, or if it was an exeption
+    def hit(cordinates):
+
+
 
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
