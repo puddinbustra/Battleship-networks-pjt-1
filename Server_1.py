@@ -2,13 +2,14 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 from urllib.parse import unquote, urlparse
 
-
+#formats own_board.txt into a html doc that can be passed in do_GET
 contents = open("own_board.txt","r")
 with open("own_board.html", "w") as e:
     e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
     for lines in contents.readlines():
         e.write( lines + "<br />" )
 
+#formats opponent_board.txt into a html doc that can be passed in do_GET
 contents = open("opponent_board.txt","r")
 with open("opponent_board.html", "w") as e:
     e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
