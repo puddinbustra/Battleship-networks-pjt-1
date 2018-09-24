@@ -1,7 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 from urllib.parse import unquote, urlparse
+import sys
+#to make sure that the systems path includes numpy
+print(sys.path)
 import numpy as np
+
+
+print(sys.path)
 
 
 #class update_board()  (we need to get this into a class so that it can be called
@@ -22,20 +28,26 @@ with open("opponent_board.html", "w") as e:
         e.write( lines + "<br />" )
 
 
-#initialize array of own_board (this needs to be a class so that we can
+#creates array of own_board (this needs to be a class so that we can
 #read in a board, update this one with it, and then easily access cordinates
 #to see if there was a hit or not)
 #if there is a hit, our own_board.txt needs to be updated to show that it was hit
-array_own_board = [[_,_,_,_,_,_,_,_,_,_], [_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
-                    [_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
-                    ,[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_],[_,_,_,_,_,_,_,_,_,_]
-                    ,[_,_,_,_,_,_,_,_,_,_]]
+#array_own_board = ['0'] * 10
+
+file = open('own_board.txt')
+board = []
+for line in file.readlines():
+    y = [value for value in line.split()]
+    board.append( y )
+
+file.close()
+print(x)
 
 
-
-class battleship(cordinates)
+#class battleship(cordinates):
     #method for determining if it was a hit, or if it was an exeption
-    def hit(cordinates):
+#    def hit(cordinates):
+
 
 
 
