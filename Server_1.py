@@ -2,6 +2,19 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from io import BytesIO
 from urllib.parse import unquote, urlparse
 
+
+contents = open("own_board.txt","r")
+with open("own_board.html", "w") as e:
+    for lines in contents.readlines():
+        e.write( lines + "<br />" )
+
+contents = open("opponent_board.txt","r")
+with open("opponent_board.html", "w") as e:
+    for lines in contents.readlines():
+        e.write( lines + "<br />" )
+
+
+
 #class battleship(cordinates)
 #   def hit(cordinates):
 #    method for determining if it was a hit, or if it was an exeption
@@ -9,17 +22,68 @@ from urllib.parse import unquote, urlparse
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
-    def do_GET(self):
-        """Respond to a GET request."""
-           self.send_response(200)
-           self.send_header("Content-type", "text/html")
-           self.end_headers()
-           self.wfile.write("<html><head><title>Title goes here.</title></head>")
-           self.wfile.write("<body><p>This is a test.</p>")
-           # If someone went to "http://something.somewhere.net/foo/bar/",
-           # then s.path equals "/foo/bar/".
-           self.wfile.write("<p>You accessed path: %s</p>" % s.path)
-           self.wfile.write("</body></html>")
+
+        def do_GET(self):
+            """Respond to a GET request."""
+            print(urlparse(self.path))
+
+            if urlparse(self.path).path == "/own_board.html":
+                f = open('own_board.html', 'rb')
+                self.send_response(200)
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write(b"<html><head><title>BattleShip</title></head>")
+                self.wfile.write(b"<body><p>Your BattleShip Board</p>")
+                self.wfile.write(f.read())
+                f.close()
+                # If someone went to "http://something.somewhere.net/foo/bar/",
+                # then s.path equals "/foo/bar/".
+                self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
+                self.wfile.write(b"</body></html>")
+
+            elif urlparse(self.path).path == "/opponent_board.html":
+                f = open('opponent_board.html', 'rb')
+                self.send_response(200)
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write(b"<html><head><title>BattleShip</title></head>")
+                self.wfile.write(b"<body><p>Opponent BattleShip Board</p>")
+                self.wfile.write(f.read())
+                f.close()
+                # If someone went to "http://something.somewhere.net/foo/bar/",
+                # then s.path equals "/foo/bar/".
+                self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
+                self.wfile.write(b"</body></html>")
+
+            else:
+                f = open('opponent_board.html', 'rb')
+                self.send_response(200)
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write(b"<html><head><title>BattleShip</title></head>")
+                self.wfile.write(b"<body><p>Standard BattleShip Board</p>")
+                self.wfile.write(f.read())
+                f.close()
+                # If someone went to "http://something.somewhere.net/foo/bar/",
+                # then s.path equals "/foo/bar/".
+                self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
+                self.wfile.write(b"</body></html>")
+
+
+        print("working")
+
+    #        f = open('battleship.html', 'rb')
+            # self.send_response(200)
+            # self.send_header("Content-type", "text/html")
+            # self.end_headers()
+            # self.wfile.write(b"<html><head><title>BattleShip</title></head>")
+            # self.wfile.write(b"<body><p>Your BattleShip Board</p>")
+            # self.wfile.write(f.read())
+            # f.close()
+            # # If someone went to "http://something.somewhere.net/foo/bar/",
+            # # then s.path equals "/foo/bar/".
+            # self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
+            # self.wfile.write(b"</body></html>")
 
         # POST
         def do_POST(self):
