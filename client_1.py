@@ -25,3 +25,18 @@ r = requests.post('http://127.0.0.1:12345/', data, params = params)
 print(r.url)
 
 print(r.text)
+
+ahit = r.text[4]
+#Update the oppboard.txt
+file = open ('opponent.board.txt','r')
+mstring = ""
+for y in range(len(board)):
+    for x in range(len(board)):
+        if(ahit==1):
+            mstring += 'X'
+        else:
+            mstring += board[y][x]
+            
+    mstring += '\n'
+
+#wfile = open('opponentboard.txt','w')
