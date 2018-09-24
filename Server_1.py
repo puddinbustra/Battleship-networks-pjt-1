@@ -51,9 +51,14 @@ def hit(cordinates[]):
    x_cord = cordinates[0]
    y_cord = cordinates[1]
    hit = 0
-   type = "N"
+   type = "A"
+   sunk = False
+   been_hit = False
+   #cordinats to the left, right, top, bottom
    check_cord_l = "N"
    check_cord_r = "N"
+   check_cord_b = "N"
+   check_cord_t = "N"
    if (
         board[x_cord, y_cord] == "C" or board[x_cord, y_cord] == "B"
         or board[x_cord, y_cord] == "R" or board[x_cord, y_cord] == "S"
@@ -61,6 +66,7 @@ def hit(cordinates[]):
       ):
        hit = 1
        type = board[x_cord, y_cord]
+       board[x_cord, y_cord] = "x"
 
        #check to see if it is sunk on the x axis
        if x_cord == 0:
@@ -74,8 +80,24 @@ def hit(cordinates[]):
            check_cord_r = board[x_cord + 1, y_cord]
 
         if y_cord == 0:
-            
+            check_cord_b = board[x_cord, y_cord - 1]
 
+        elif y_cord == 9:
+            check_cord_t = board[x_cord, y_cord + 1]
+
+        else:
+            check_cord_b = board[x_cord, y_cord - 1]
+            check_cord_t = board[x_cord, y_cord + 1]
+
+        while True:
+            check_cord_l != type
+            check_cord_r != type
+            check_cord_b != type
+            check_cord_t != type
+            sunk = True
+
+    elif board[x_cord, y_cord] == "x":
+        been_hit == True
 
 
 
@@ -157,7 +179,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             mylist = [x_cord, y_cord]
             print(mylist)
 
-
             #url = unquote(o.params)
             #print(url)
 
@@ -166,12 +187,38 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             # result = battleship.hit(post_data)
             # if result == hit:
 
-            self.send_response(200)
-            self.end_headers()
-            response = BytesIO()
-            response.write(b'This is POST request. ')
-            response.write(b'hit=1')
-            self.wfile.write(response.getvalue())
+            if isinstance(x_cord, int) != True or isinstance(y_cord, int) != True:
+                self.send_response(400)
+                self.end_headers()
+                response = BytesIO()
+                response.write(b'This is POST request. ')
+                response.write(b'Coordinants were out of Bounds')
+                self.wfile.write(response.getvalue())
+
+
+            elif x_cord > 9 or y_cord > 9:
+                self.send_response(404)
+                self.end_headers()
+                response = BytesIO()
+                response.write(b'This is POST request. ')
+                response.write(b'Coordinants were out of Bounds')
+                self.wfile.write(response.getvalue())
+
+            elif been_hit = True:
+                self.send_response(410)
+                self.end_headers()
+                response = BytesIO()
+                response.write(b'This is POST request. ')
+                response.write(b'Coordinants were out of Bounds')
+                self.wfile.write(response.getvalue())
+
+            else
+                self.send_response(200)
+                self.end_headers()
+                response = BytesIO()
+                response.write(b'This is POST request. ')
+                response.write(b'hit=1')
+                self.wfile.write(response.getvalue())
 
 
 def run():
