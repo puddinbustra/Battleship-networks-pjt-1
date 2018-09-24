@@ -1,7 +1,7 @@
 '''
 Created on Sep 20, 2018
 
-@author: andrewdixon
+@author: andrewdixon, Hugh O'Neill
 '''
 #Server 
 
@@ -25,36 +25,30 @@ s.bind(('', port))
 print( "socket binded to %s" %(port) )
 
 # put the socket into listening mode
-s.listen(5)
+s.listen(1)
 print( "socket is listening")
 
-# a forever loop until we interrupt it or
-# an error occurs
+#Set up the game
+    #Upload your board, and your copy of opponent's board
+
 ships = 17
 while ships > 0:
 
 # Establish connection with client.
     c, addr = s.accept()
-    print('Got connection from', addr )
-
-    #Receive the data
-    data = conn.recv(64)
-
-    # send a thank you message to the client.
-    c.send('Thank you for connecting')
+    print('Got connection from', addr)
+    #Receive the pair of ints
+    xcor,ycor = conn.recv(64)
+    update(xcor,ycor)
 
 # Close the connection with the client
-#
 c.close()
 
 def update(xcor, ycor):
     #Access document (need a get?)
-    #change xcor and ycor so that they're read in properly
-    xcor -= 1
-    ycor = len(board[])- ycor
     #O represents a miss, but previously shot. x represents a previous hit
     if board[ycor,xcor] == 'x' or board[ycor,xcor] == 'o':
-        #Print error
+        #Return http error message to client
     elif board[ycor,xcor] == ' ':
         #may need to http post this
         board[ycor,xcor] = 'o'
@@ -65,9 +59,7 @@ def update(xcor, ycor):
         board[ycor][xcor] = 'x'
         ships -= 1
         #return hit
-    
-    #Get 
-    #Probably an http post to your side's board
-    return 
+    #Note that if we just update the local text file, it will have to be uploaded each time
+     
 
 
