@@ -5,11 +5,13 @@ from urllib.parse import unquote, urlparse
 
 contents = open("own_board.txt","r")
 with open("own_board.html", "w") as e:
+    e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
     for lines in contents.readlines():
         e.write( lines + "<br />" )
 
 contents = open("opponent_board.txt","r")
 with open("opponent_board.html", "w") as e:
+    e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
     for lines in contents.readlines():
         e.write( lines + "<br />" )
 
