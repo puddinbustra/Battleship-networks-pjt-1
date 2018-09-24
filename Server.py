@@ -48,17 +48,17 @@ def update(xcor, ycor):
     #Access document (need a get?)
     #O represents a miss, but previously shot. x represents a previous hit
     if board[ycor,xcor] == 'x' or board[ycor,xcor] == 'o':
-        #Return http error message to client
+        #Send http error message to client
     elif board[ycor,xcor] == ' ':
         #may need to http post this
         board[ycor,xcor] = 'o'
-        #return miss
+        c.send("miss")
     #If hit
     else:
         #May need http post
         board[ycor][xcor] = 'x'
         ships -= 1
-        #return hit
+        c.send("hit")
     #Note that if we just update the local text file, it will have to be uploaded each time
      
 

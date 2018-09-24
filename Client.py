@@ -33,6 +33,7 @@ update(data)
 s.close()
 
 def update(status)
+    #Update your copy of the opponent's board, may need the http messages
     if(status == "hit"):
         oppboard[ycor,xcor] = 'x'
     elif(status == "miss"):
