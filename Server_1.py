@@ -47,7 +47,7 @@ print(board)
 #class battleship(cordinates):
     #method for determining if it was a hit, or if it was an exeption
     #(probably needs to import both the board and the cordinates)
-def hit(cordinates[]):
+def hit(cordinates):
    x_cord = cordinates[0]
    y_cord = cordinates[1]
    hit = 0
@@ -79,25 +79,27 @@ def hit(cordinates[]):
            check_cord_l = board[x_cord - 1, y_cord]
            check_cord_r = board[x_cord + 1, y_cord]
 
-        if y_cord == 0:
-            check_cord_b = board[x_cord, y_cord - 1]
 
-        elif y_cord == 9:
-            check_cord_t = board[x_cord, y_cord + 1]
 
-        else:
-            check_cord_b = board[x_cord, y_cord - 1]
-            check_cord_t = board[x_cord, y_cord + 1]
+       if y_cord == 0:
+           check_cord_b = board[x_cord, y_cord - 1]
 
-        while True:
-            check_cord_l != type
-            check_cord_r != type
-            check_cord_b != type
-            check_cord_t != type
-            sunk = True
+       elif y_cord == 9:
+           check_cord_t = board[x_cord, y_cord + 1]
 
-    elif board[x_cord, y_cord] == "x":
-        been_hit == True
+       else:
+           check_cord_b = board[x_cord, y_cord - 1]
+           check_cord_t = board[x_cord, y_cord + 1]
+
+       while True:
+               check_cord_l != type
+               check_cord_r != type
+               check_cord_b != type
+               check_cord_t != type
+               sunk = True
+
+   elif board[x_cord, y_cord] == "x":
+       been_hit == True
 
 
 
@@ -167,6 +169,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
         # POST
         def do_POST(self):
             # Doesn't do anything with posted data
+            been_hit = False
             content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
             post_data = self.rfile.read(content_length) # <--- Gets the data itself
             print(self.headers['content-type'])
@@ -204,7 +207,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 response.write(b'Coordinants were out of Bounds')
                 self.wfile.write(response.getvalue())
 
-            elif been_hit = True:
+            elif been_hit == True:
                 self.send_response(410)
                 self.end_headers()
                 response = BytesIO()
@@ -212,7 +215,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 response.write(b'Coordinants were out of Bounds')
                 self.wfile.write(response.getvalue())
 
-            else
+            else:
                 self.send_response(200)
                 self.end_headers()
                 response = BytesIO()
