@@ -1,10 +1,31 @@
- mstring = ""
-        for y in range(len(board)):
-            for x in range(len(board)):
-                mstring += board[y][x]
-            mstring += '\n'
-        board = mstring
-        print(board)
+print("I like pie + \n is new")
 
-        with open("own_board.txt", "w") as output:
-            output.write(str(board))   
+
+file = open('own_board.txt')
+board = []
+for line in file.readlines():
+    line = line.strip()
+    y = [value for value in list(line)]
+    board.append(y)
+#file.close()
+print(board)
+
+
+mstring = ""
+for y in range(len(board)):
+    for x in range(len(board)):
+        #Instead of 1s, use whatever coords need to be changed
+        if(y==1) and (x==1):
+            #Instead of P, but in whatever letter you'd use for a hit or miss
+            mstring += 'P'
+        else:
+            mstring += board[y][x]
+            
+    mstring += '\n'
+board = mstring
+print(board)
+file.close()
+
+
+with open("own_board.txt", "w") as output:
+    output.write(str(board)) 
