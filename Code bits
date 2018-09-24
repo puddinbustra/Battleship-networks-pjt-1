@@ -15,11 +15,11 @@ mstring = ""
 for y in range(len(board)):
     for x in range(len(board)):
         #Instead of 1s, use whatever coords need to be changed
-        if(y==1) and (x==1):
+        #if(y==1) and (x==1):
             #Instead of P, but in whatever letter you'd use for a hit or miss
-            mstring += 'P'
-        else:
-            mstring += board[y][x]
+         #   mstring += 'P'
+   #    # else:
+        mstring += board[y][x]
             
     mstring += '\n'
 board = mstring
