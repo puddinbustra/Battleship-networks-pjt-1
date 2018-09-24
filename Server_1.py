@@ -46,7 +46,35 @@ print(board)
 
 #class battleship(cordinates):
     #method for determining if it was a hit, or if it was an exeption
- #  def hit(cordinates):
+    #(probably needs to import both the board and the cordinates)
+def hit(cordinates[]):
+   x_cord = cordinates[0]
+   y_cord = cordinates[1]
+   hit = 0
+   type = "N"
+   check_cord_l = "N"
+   check_cord_r = "N"
+   if (
+        board[x_cord, y_cord] == "C" or board[x_cord, y_cord] == "B"
+        or board[x_cord, y_cord] == "R" or board[x_cord, y_cord] == "S"
+        or board[x_cord, y_cord] == "D"
+      ):
+       hit = 1
+       type = board[x_cord, y_cord]
+
+       #check to see if it is sunk on the x axis
+       if x_cord == 0:
+           check_cord_r = board[x_cord + 1, y_cord]
+
+       elif x_cord == 9:
+           check_cord_l = board[x_cord - 1, y_cord]
+
+       else:
+           check_cord_l = board[x_cord - 1, y_cord]
+           check_cord_r = board[x_cord + 1, y_cord]
+
+        if y_cord == 0:
+            
 
 
 
