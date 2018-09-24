@@ -6,9 +6,8 @@ import sys
 print(sys.path)
 import numpy as np
 
-
-print(sys.path)
-
+#global var (I'd rather have this accessed from the class below, but dont know how to make that happen)
+global_cord = "x=4"
 
 #class update_board()  (we need to get this into a class so that it can be called
 #                       multiple times)
@@ -28,25 +27,27 @@ with open("opponent_board.html", "w") as e:
         e.write( lines + "<br />" )
 
 
-#creates array of own_board (this needs to be a class so that we can
+#creates array of board (this needs to be a class so that we can
 #read in a board, update this one with it, and then easily access cordinates
 #to see if there was a hit or not)
 #if there is a hit, our own_board.txt needs to be updated to show that it was hit
 #array_own_board = ['0'] * 10
 
+#class split_board
 file = open('own_board.txt')
 board = []
 for line in file.readlines():
-    y = [value for value in line.split()]
+    line = line.strip()
+    y = [value for value in list(line)]
     board.append( y )
-
 file.close()
-print(x)
+print(board)
 
 
 #class battleship(cordinates):
     #method for determining if it was a hit, or if it was an exeption
-#    def hit(cordinates):
+ #  def hit(cordinates):
+
 
 
 
@@ -123,7 +124,9 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             print(self.address_string())
             info = urlparse(self.path).query
             print(info)
-            mylist = info.split("&")
+            x_cord = int(info[2])
+            y_cord = int(info[5])
+            mylist = [x_cord, y_cord]
             print(mylist)
 
 
