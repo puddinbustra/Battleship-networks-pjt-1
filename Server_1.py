@@ -43,64 +43,72 @@ file.close()
 print(board)
 
 
-#class battleship(cordinates):
+class Battleship:
     #method for determining if it was a hit, or if it was an exeption
     #(probably needs to import both the board and the cordinates)
-def hit(cordinates):
-   x_cord = cordinates[0]
-   y_cord = cordinates[1]
-   hit = 0
-   type = "A"
-   sunk = False
-   been_hit = False
-   #cordinats to the left, right, top, bottom
-   check_cord_l = "N"
-   check_cord_r = "N"
-   check_cord_b = "N"
-   check_cord_t = "N"
-   if (
-        board[x_cord, y_cord] == "C" or board[x_cord, y_cord] == "B"
-        or board[x_cord, y_cord] == "R" or board[x_cord, y_cord] == "S"
-        or board[x_cord, y_cord] == "D"
-      ):
-       hit = 1
-       type = board[x_cord, y_cord]
-       board[x_cord, y_cord] = "x"
+    #(needs to return hit, type, sunk, been_hit)
 
-       #check to see if it is sunk on the x axis
-       if x_cord == 0:
-           check_cord_r = board[x_cord + 1, y_cord]
+    def __init__ (self, cordinates):
+        self.cordinates = cordinates
 
-       elif x_cord == 9:
-           check_cord_l = board[x_cord - 1, y_cord]
+    def hit(self):
+        hit = 0
+        type = "A"
+        sunk = 0
+        been_hit = 0
+        #cordinats to the left, right, top, bottom
+        check_cord_l = "N"
+        check_cord_r = "N"
+        check_cord_b = "N"
+        check_cord_t = "N"
+        x_cord = self.cordinates[0]
+        y_cord = self.cordinates[1]
+        print(x_cord)
+        print(y_cord)
 
-       else:
-           check_cord_l = board[x_cord - 1, y_cord]
-           check_cord_r = board[x_cord + 1, y_cord]
+        if (
+            board[x_cord][y_cord] == "C" or board[x_cord][y_cord] == "B"
+            or board[x_cord][y_cord] == "R" or board[x_cord][y_cord] == "S"
+            or board[x_cord][y_cord] == "D"
+          ):
+           hit = 1
+           type = board[x_cord][y_cord]
+           board[x_cord][y_cord] = "x"
 
+           #check to see if it is sunk on the x axis
+           if x_cord == 0:
+               check_cord_r = board[x_cord+1][y_cord]
 
+           elif x_cord == 9:
+               check_cord_l = board[x_cord-1][y_cord]
 
-       if y_cord == 0:
-           check_cord_b = board[x_cord, y_cord - 1]
-
-       elif y_cord == 9:
-           check_cord_t = board[x_cord, y_cord + 1]
-
-       else:
-           check_cord_b = board[x_cord, y_cord - 1]
-           check_cord_t = board[x_cord, y_cord + 1]
-
-       while True:
-               check_cord_l != type
-               check_cord_r != type
-               check_cord_b != type
-               check_cord_t != type
-               sunk = True
-
-   elif board[x_cord, y_cord] == "x":
-       been_hit == True
+           else:
+               check_cord_l = board[x_cord-1][y_cord]
+               check_cord_r = board[x_cord+1][y_cord]
 
 
+
+           if y_cord == 0:
+               check_cord_b = board[x_cord][y_cord-1]
+
+           elif y_cord == 9:
+               check_cord_t = board[x_cord][y_cord+1]
+
+           else:
+               check_cord_b = board[x_cord][y_cord-1]
+               check_cord_t = board[x_cord][y_cord+1]
+
+           while True:
+                   check_cord_l != type
+                   check_cord_r != type
+                   check_cord_b != type
+                   check_cord_t != type
+                   sunk = 1
+
+        elif board[x_cord][y_cord] == "x":
+           been_hit == 1
+
+        return(hit, type, sunk, been_hit)
 
 
 # HTTPRequestHandler class
@@ -168,7 +176,11 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
         # POST
         def do_POST(self):
             # Doesn't do anything with posted data
-            been_hit = False
+            hit = 0
+            type = "N"
+            sunk = 0
+            been_hit = 0
+
             content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
             post_data = self.rfile.read(content_length) # <--- Gets the data itself
             print(self.headers['content-type'])
@@ -180,7 +192,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             y_cord = int(info[5])
             mylist = [x_cord, y_cord]
             print(mylist)
-
+            battleship = Battleship(mylist)
+            hit, type, sunk, been_hit = battleship.hit()
             #url = unquote(o.params)
             #print(url)
 
@@ -206,7 +219,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 response.write(b'Coordinants were out of Bounds')
                 self.wfile.write(response.getvalue())
 
-            elif been_hit == True:
+            elif been_hit == 1:
                 self.send_response(410)
                 self.end_headers()
                 response = BytesIO()
@@ -218,8 +231,10 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.end_headers()
                 response = BytesIO()
-                response.write(b'This is POST request. ')
-                response.write(b'hit=1')
+                response.write(b'hit=%d' % hit)
+                response.write(b'type=%s' % bytes(type,'utf-8'))
+                response.write(b'sunk=%d' % sunk)
+                response.write(b'been_hit=%d' % been_hit)
                 self.wfile.write(response.getvalue())
 
 
