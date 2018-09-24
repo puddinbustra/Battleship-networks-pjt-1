@@ -1,0 +1,8 @@
+#Code bits
+        mstring = ""
+        for y in range(len(board)):
+            for x in range(len(board)):
+                mstring += board[y][x]
+            mstring += '\n'
+        board = mstring
+        print(board)
