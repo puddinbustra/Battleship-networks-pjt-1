@@ -19,16 +19,16 @@ with open("opponent_board.html", "w") as e:
 
 #class battleship(cordinates)
 #   def hit(cordinates):
-#    method for determining if it was a hit, or if it was an exeption
+#   method for determining if it was a hit, or if it was an exeption
 
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
-
+        # function to reply to HTTP GET calls
         def do_GET(self):
-            """Respond to a GET request."""
             print(urlparse(self.path))
 
+                #url path to get to own_board
             if urlparse(self.path).path == "/own_board.html":
                 f = open('own_board.html', 'rb')
                 self.send_response(200)
@@ -38,11 +38,10 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b"<body><p>Your BattleShip Board</p>")
                 self.wfile.write(f.read())
                 f.close()
-                # If someone went to "http://something.somewhere.net/foo/bar/",
-                # then s.path equals "/foo/bar/".
                 self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
                 self.wfile.write(b"</body></html>")
 
+                #url path to get to opponent_board
             elif urlparse(self.path).path == "/opponent_board.html":
                 f = open('opponent_board.html', 'rb')
                 self.send_response(200)
@@ -52,11 +51,10 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b"<body><p>Opponent BattleShip Board</p>")
                 self.wfile.write(f.read())
                 f.close()
-                # If someone went to "http://something.somewhere.net/foo/bar/",
-                # then s.path equals "/foo/bar/".
                 self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
                 self.wfile.write(b"</body></html>")
 
+                #url without a path
             else:
                 f = open('opponent_board.html', 'rb')
                 self.send_response(200)
@@ -66,8 +64,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b"<body><p>Standard BattleShip Board</p>")
                 self.wfile.write(f.read())
                 f.close()
-                # If someone went to "http://something.somewhere.net/foo/bar/",
-                # then s.path equals "/foo/bar/".
                 self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, 'utf-8'))
                 self.wfile.write(b"</body></html>")
 
@@ -121,7 +117,6 @@ def run():
   print('starting server...')
 
   # Server settings
-  # Choose port 8080, for port 80, which is normally used for a http server, you need root access
   server_address = ('127.0.0.1', 12345)
   httpd = HTTPServer(server_address, testHTTPServer_RequestHandler)
   print('running server...')
