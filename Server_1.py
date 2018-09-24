@@ -4,7 +4,6 @@ from urllib.parse import unquote, urlparse
 import sys
 #to make sure that the systems path includes numpy
 print(sys.path)
-import numpy as np
 
 #global var (I'd rather have this accessed from the class below, but dont know how to make that happen)
 global_cord = "x=4"
