@@ -37,9 +37,9 @@ board = []
 for line in file.readlines():
     line = line.strip()
     y = [value for value in list(line)]
-    board.append(y)
+    board.append( y )
 file.close()
-#print(board)
+print(board)
 
 
 class Update_txt_board:
@@ -47,24 +47,6 @@ class Update_txt_board:
     def __init__ (self):
         self.x = 'working'
 
-<<<<<<< HEAD
-    def write_board(self):
-        mstring = ""
-        for y in range(len(board)):
-            for x in range(len(board)):
-                mstring += board[y][x]
-            mstring += '\n'
-        board = mstring
-        print(board)
-
-        with open("own_board.txt", "w") as output:
-            output.write(str(board))   
-
-        # with open('own_board.txt', 'w') as f:
-        #     writer = csv.writer(f, delimiter='')
-        ##     (f, delimiter=',')
-        #     writer.writerows(board)  #considering my_list is a list of lists.
-=======
     def write_board(self, board):
 
         mstring = ""
@@ -75,7 +57,6 @@ class Update_txt_board:
         board = mstring
         print(board)
 
->>>>>>> 0121fb7e306d38c4ef0c9468c044a838db21ae01
 
 
         with open("own_board.txt", "w") as output:
@@ -290,5 +271,6 @@ def run():
   httpd = HTTPServer(server_address, testHTTPServer_RequestHandler)
   print('running server...')
   httpd.serve_forever()
+
 
 run()
