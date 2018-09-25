@@ -37,7 +37,7 @@ for y in range(len(board)):
         if(y == ycor and x == xcor):
             if(ahit==1):
                 mstring += atype
-            if(ahit == 0)L
+            if(ahit == 0):
                 mstring = '0'
         else:
             mstring += board[y][x]
