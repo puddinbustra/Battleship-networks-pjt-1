@@ -44,5 +44,6 @@ for y in range(len(board)):
             
     mstring += '\n'
 file.close()
+#This updates the text file. It does not yet upload 
 with open("opponent_board.txt", "w") as output:
     output.write(str(board))
