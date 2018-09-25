@@ -30,7 +30,7 @@ print(r.text)
 ahit = r.text[4]
 atype = r.text[11]
 #Update the oppboard.txt
-file = open ('opponent.board.txt','r')
+file = open ('opponent_board.txt','r')
 mstring = ""
 for y in range(len(board)):
     for x in range(len(board)):
@@ -43,5 +43,6 @@ for y in range(len(board)):
             mstring += board[y][x]
             
     mstring += '\n'
-
-#wfile = open('opponentboard.txt','w')
+file.close()
+with open("opponent_board.txt", "w") as output:
+    output.write(str(board))
