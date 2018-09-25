@@ -27,10 +27,18 @@ print(r.raise_for_status())
 print(r.url)
 print(r.text)
 
-ahit = r.text[4]
+ahit = int(r.text[4])
 atype = r.text[11]
 #Update the oppboard.txt
 file = open ('opponent_board.txt','r')
+
+board = []
+for line in file.readlines():
+    line = line.strip()
+    y = [value for value in list(line)]
+    board.append( y )
+
+
 mstring = ""
 for y in range(len(board)):
     for x in range(len(board)):
@@ -44,6 +52,16 @@ for y in range(len(board)):
             
     mstring += '\n'
 file.close()
-#This updates the text file. It does not yet upload 
+
+
+#This updates the text file. 
 with open("opponent_board.txt", "w") as output:
-    output.write(str(board))
+    output.write(mstring)
+    output.close()
+
+#This updates the html file.
+contents = open("opponent_board.txt","r")
+with open("opponent_board.html", "w") as e:
+    e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
+    for lines in contents.readlines():
+        e.write( lines + "<br />" )
