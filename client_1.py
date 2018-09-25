@@ -8,12 +8,14 @@ Created on Sep 20, 2018
 import requests
 
 # Get the coords, and send them to the server
-coords = input("What coordinants would you like? eg '3,4' in the form y,x: ")
+cords = input("What coordinants would you like? eg '3,4' in the form x,y: ")
 # change xcor and ycor so that they're read in properly
-xcor,ycor = int(coords[0]),int(coords[2])
+mylist = cords.split(",")
+print(mylist[0])
+print(mylist[1])
+xcor = int(mylist[0])
+ycor = int(mylist[1])
 xcor -= 1
-# At least if it's a text file, I think this is how it works
-# We can replace len(board) with the default number if it's inconvenient
 ycor -= 1
 
 params = "x=" + str(xcor) + "y=" + str(ycor)
@@ -45,9 +47,6 @@ if ahit == 0:
     board[ycor][xcor] = '0'
 else:
     board[ycor][xcor] = '1'
-
-print(xcor)
-print(ycor)
 
 mstring = ""
 for y in range(len(board)):
