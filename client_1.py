@@ -8,7 +8,7 @@ Created on Sep 20, 2018
 import requests
 
 # Get the coords, and send them to the server
-coords = input("What coordinants would you like? eg '3,4': ")
+coords = input("What coordinants would you like? eg '3,4' in the form y,x: ")
 # change xcor and ycor so that they're read in properly
 xcor,ycor = int(coords[0]),int(coords[2])
 xcor -= 1
@@ -23,8 +23,11 @@ data = params
 
 r = requests.post('http://127.0.0.1:12345/', data, params = params)
 print(r.status_code)
+
 print(r.raise_for_status())
+
 print(r.url)
+
 print(r.text)
 
 ahit = int(r.text[4])
@@ -38,23 +41,24 @@ for line in file.readlines():
     y = [value for value in list(line)]
     board.append( y )
 
+if ahit == 0:
+    board[ycor][xcor] = '0'
+else:
+    board[ycor][xcor] = '1'
+
+print(xcor)
+print(ycor)
 
 mstring = ""
 for y in range(len(board)):
     for x in range(len(board)):
-        if(y == ycor and x == xcor):
-            if(ahit==1):
-                mstring += atype
-            if(ahit == 0):
-                mstring = '0'
-        else:
-            mstring += board[y][x]
-            
+        mstring += board[y][x]
     mstring += '\n'
-file.close()
+board = mstring
+print(board)
 
 
-#This updates the text file. 
+#This updates the text file.
 with open("opponent_board.txt", "w") as output:
     output.write(mstring)
     output.close()
