@@ -1,11 +1,22 @@
 '''
 Created on Sep 20, 2018
-
 @author: andrewdixon
 '''
 # Import socket module
 
 import requests
+
+##
+##def cleanBoard():
+##    for y in range(len(board)):
+##        for x in range(len(board)):
+##            mstring += '_'
+##    mstring += '\n'
+##    board = mstring
+##    with open("opponent_board.txt", "w") as output:
+##        output.write(mstring)
+##        output.close()
+
 
 # Get the coords, and send them to the server
 cords = input("What coordinants would you like? eg '3,4' in the form x,y: ")
@@ -17,6 +28,9 @@ xcor = int(mylist[0])
 ycor = int(mylist[1])
 xcor -= 1
 ycor -= 1
+##if(xcor == -1 and ycor == -1):
+##    cleanBoard()
+
 
 params = "x=" + str(xcor) + "y=" + str(ycor)
 
@@ -68,3 +82,4 @@ with open("opponent_board.html", "w") as e:
     e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
     for lines in contents.readlines():
         e.write( lines + "<br />" )
+
