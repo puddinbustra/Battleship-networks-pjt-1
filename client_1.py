@@ -22,8 +22,9 @@ data = params
 #params = "x=5&y=7"
 
 r = requests.post('http://127.0.0.1:12345/', data, params = params)
+print(r.status_code)
+print(r.raise_for_status())
 print(r.url)
-
 print(r.text)
 
 ahit = r.text[4]
