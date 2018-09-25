@@ -4,25 +4,25 @@ from urllib.parse import unquote, urlparse
 import sys
 import csv
 
-#global var (I'd rather have this accessed from the class below, but dont know how to make that happen)
-global_cord = "x=4"
 
 #class update_board()  (we need to get this into a class so that it can be called
 #                       multiple times)
 
 #formats own_board.txt into a html doc that can be passed in do_GET
-contents = open("own_board.txt","r")
-with open("own_board.html", "w") as e:
-    e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
-    for lines in contents.readlines():
-        e.write( lines + "<br />" )
 
-#formats opponent_board.txt into a html doc that can be passed in do_GET
-contents = open("opponent_board.txt","r")
-with open("opponent_board.html", "w") as e:
-    e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
-    for lines in contents.readlines():
-        e.write( lines + "<br />" )
+def update_HTML():
+    contents = open("own_board.txt","r")
+    with open("own_board.html", "w") as e:
+        e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
+        for lines in contents.readlines():
+            e.write( lines + "<br />" )
+
+    #formats opponent_board.txt into a html doc that can be passed in do_GET
+    contents = open("opponent_board.txt","r")
+    with open("opponent_board.html", "w") as e:
+        e.write('<link href="txtstyle.css" rel="stylesheet" type="text/css" />')
+        for lines in contents.readlines():
+            e.write( lines + "<br />" )
 
 
 #creates array of board (this needs to be a class so that we can
@@ -41,21 +41,27 @@ for line in file.readlines():
 file.close()
 print(board)
 
-class UpdateBoard:
+
+class Update_txt_board:
 
     def __init__ (self):
         self.x = 'working'
 
-    def write_board(self):
+    def write_board(self, board):
 
-        with open("onw_board.txt", "w") as output:
+        mstring = ""
+        for y in range(len(board)):
+            for x in range(len(board)):
+                mstring += board[y][x]
+            mstring += '\n'
+        board = mstring
+        print(board)
+
+
+
+        with open("own_board.txt", "w") as output:
             output.write(str(board))
-
-        # with open('own_board.txt', 'w') as f:
-        #     writer = csv.writer(f, delimiter='')
-        #     #(f, delimiter=',')
-        #     writer.writerows(board)  #considering my_list is a list of lists.
-
+            output.close()
 
 
 class Battleship:
@@ -86,42 +92,42 @@ class Battleship:
             or board[x_cord][y_cord] == "R" or board[x_cord][y_cord] == "S"
             or board[x_cord][y_cord] == "D"
           ):
-           hit = 1
-           type = board[x_cord][y_cord]
-           board[x_cord][y_cord] = "x"
-
-           #check to see if it is sunk on the x axis
-           if x_cord == 0:
+            hit = 1
+            type = board[x_cord][y_cord]
+            board[x_cord][y_cord] = "x"
+            print("entering if1")
+            #check to see if it is sunk on the x axis
+            if x_cord == 0:
                check_cord_r = board[x_cord+1][y_cord]
 
-           elif x_cord == 9:
+            elif x_cord == 9:
                check_cord_l = board[x_cord-1][y_cord]
 
-           else:
+            else:
                check_cord_l = board[x_cord-1][y_cord]
                check_cord_r = board[x_cord+1][y_cord]
 
+            print("entering if2")
 
-
-           if y_cord == 0:
+            if y_cord == 0:
                check_cord_b = board[x_cord][y_cord-1]
 
-           elif y_cord == 9:
+            elif y_cord == 9:
                check_cord_t = board[x_cord][y_cord+1]
 
-           else:
+            else:
                check_cord_b = board[x_cord][y_cord-1]
                check_cord_t = board[x_cord][y_cord+1]
 
-           while True:
-                   check_cord_l != type
-                   check_cord_r != type
-                   check_cord_b != type
-                   check_cord_t != type
-                   sunk = 1
+            if (check_cord_l != type, check_cord_r != type, check_cord_b != type, check_cord_t != type):
+                sunk = 0
+
+            else:
+                sunk = 1
 
         elif board[x_cord][y_cord] == "x":
-           been_hit == 1
+            been_hit = 1
+            type = "x"
 
         return(hit, type, sunk, been_hit)
 
@@ -173,8 +179,6 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b"</body></html>")
 
 
-        print("working")
-
     #        f = open('battleship.html', 'rb')
             # self.send_response(200)
             # self.send_header("Content-type", "text/html")
@@ -207,10 +211,14 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             y_cord = int(info[5])
             mylist = [x_cord, y_cord]
             print(mylist)
+            print("entering battleship")
             battleship = Battleship(mylist)
             hit, type, sunk, been_hit = battleship.hit()
-            newBoard = UpdateBoard()
-            newBoard.write_board()
+            print("updating board")
+            newBoard = Update_txt_board()
+            newBoard.write_board(board)
+            update_HTML()
+            print("board updated")
             #url = unquote(o.params)
             #print(url)
 
